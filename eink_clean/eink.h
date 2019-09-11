@@ -153,25 +153,27 @@ const unsigned char lut_wb_quick[] = {
 
 /* Driver */
 
-#define EINK_PIXEL_SET		1
-#define EINK_SYNC			(1 << 7)
-
 struct eink_display {
 	uint16_t cols;
 	uint16_t rows;
 	char    *text;
-	uint8_t  rdy;
 };
 
-struct eink_display *eink_init(uint16_t cols, uint16_t rows);
+struct eink_window {
+	uint16_t x;
+	uint16_t y;
+	uint16_t rows;
+	uint16_t cols;
+	uint8_t *window;
+};
+
+void eink_init(uint16_t cols, uint16_t rows);
 void eink_exec(uint8_t opcode, uint8_t dcount, ...);
 void eink_execv(uint8_t opcode, uint8_t dcount, uint8_t *data);
-void eink_set_pixel(struct eink_display *display, uint16_t x, uint16_t y, uint8_t value);
-void eink_set_window(struct eink_display *display, uint16_t x, uint16_t y, uint8_t *window, uint16_t cols, uint16_t rows);
+void eink_set_pixel(uint16_t x, uint16_t y, uint8_t value);
+void eink_set_window(uint16_t x, uint16_t y, uint8_t *window, uint16_t cols, uint16_t rows);
 void eink_set_luts(uint8_t quick);
+void eink_clear();
 void eink_sync();
-void eink_clear(struct eink_display *display);
-void eink_show();
-
 
 #endif

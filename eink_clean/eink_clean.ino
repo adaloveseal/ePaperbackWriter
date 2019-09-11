@@ -1,18 +1,28 @@
 #include "eink.h"
+#include "event.h"
 
-struct eink_display *display;
+char window[] = {
+	0b10101010, 0b10101010,
+	255, 255,
+	255, 255,
+	0, 0,
+	0, 0,
+	255, 255,
+	255, 255,
+	0, 0,
+	0, 0,
+	0b01010101, 0b01010101
+  };
 
 void setup() {
-  Serial.begin(9600);
-  while(!Serial)
-    delay(50);
-  delay(5000);
-  display = eink_init(400, 300);
-  eink_set_pixel(display, 8, 5, 1);
-  eink_sync();
+	Serial.begin(9600);
+	delay(5000);
+	eink_init(400, 300);
+	eink_set_window(16, 25, window, 16, 10);
+	eink_set_window(64, 20, window, 16, 10);
+	eink_set_window(128, 40, window, 16, 10);
+	eink_sync();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
 }
