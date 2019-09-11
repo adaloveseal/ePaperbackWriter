@@ -60,6 +60,7 @@ void eink_set_window(uint16_t x, uint16_t y, uint8_t *window, uint16_t cols, uin
 		y >> 8, y & 0xFF, (y + rows - 1) >> 8, (y + rows - 1) & 0xFF, 0x01);
 	eink_execv(DATA_START_TRANSMISSION_1, cols / 8 * rows, window);
 	eink_execv(DATA_START_TRANSMISSION_2, cols / 8 * rows, window);
+	eink_sync();
 }
 
 void eink_clear() {
