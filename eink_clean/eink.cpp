@@ -28,7 +28,7 @@ void eink_init(uint16_t cols, uint16_t rows) {
 		delay(50);
 	eink_exec(PANEL_SETTING, 2, 0xBF, 0x0B);
 	eink_exec(PLL_CONTROL, 1, 0x3C);
-	eink_set_luts(false);  // Start in slow mode to get a good erase
+	eink_set_luts(false);// Start in slow mode to get a good erase
 	display.cols = cols;
 	display.rows = rows;
 	display.text = NULL;
@@ -37,7 +37,7 @@ void eink_init(uint16_t cols, uint16_t rows) {
 	// More dirty polling
 	while (digitalRead(BUSY_PIN) == LOW)
 		delay(50);
-	eink_set_luts(true);  // Switch to fast for real operation
+	eink_set_luts(true);// Switch to fast for real operation
 }
 
 void eink_set_luts(uint8_t quick) {
@@ -49,29 +49,30 @@ void eink_set_luts(uint8_t quick) {
 	eink_execv(LUT_BLACK_TO_BLACK, 42, quick ? lut_bb_quick : lut_bb);
 }
 
+bool eink_available() {
+	return digitalRead(BUSY_PIN) == HIGH;
+}
+
+void eink_set_window_cb(struct eink_window *win) {
+	eink_exec(PARTIAL_IN, 0);
+	eink_exec(PARTIAL_WINDOW, 9, win->x >> 8, win->x & 0xF8,
+		((win->x & 0xF8) + win->cols- 1) >> 8, ((win->x & 0xF8) + win->cols- 1) | 0x07,
+		win->y >> 8, win->y & 0xFF, (win->y + win->rows - 1) >> 8, (win->y + win->rows - 1) & 0xFF, 0x01);
+	eink_execv(DATA_START_TRANSMISSION_1, win->cols / 8 * win->rows, win->window);
+	eink_execv(DATA_START_TRANSMISSION_2, win->cols / 8 * win->rows, win->window);
+	eink_exec(PARTIAL_OUT, 0);
+	if (!--pending_updates)
+		eink_exec(DISPLAY_REFRESH, 0);
+}
+
 void eink_set_window(uint16_t x, uint16_t y, uint8_t *window, uint16_t cols, uint16_t rows) {
 	if ((x + cols > display.cols) || (y + rows > display.rows)) {
 		Serial.println("/!\\ Wrong window size or position");
 		return;
 	}
-	// TODO: check async works
 	pending_updates++;
-	Serial.println(ev_register_interrupt(
-		[] {
-		  return digitalRead(BUSY_PIN);
-		},
-		[x, y, window, cols, rows] {
-			eink_exec(PARTIAL_IN, 0);
-			eink_exec(PARTIAL_WINDOW, 9, x >> 8, x & 0xF8,
-				((x & 0xF8) + cols  - 1) >> 8, ((x & 0xF8) + cols  - 1) | 0x07,
-				y >> 8, y & 0xFF, (y + rows - 1) >> 8, (y + rows - 1) & 0xFF, 0x01);
-			eink_execv(DATA_START_TRANSMISSION_1, cols / 8 * rows, window);
-			eink_execv(DATA_START_TRANSMISSION_2, cols / 8 * rows, window);
-			eink_exec(PARTIAL_OUT, 0);
-			if (!--pending_updates)
-				eink_exec(DISPLAY_REFRESH, 0);
-		}
-	));
+	struct eink_window win = { x, y, rows, cols, window };
+	Serial.println(ev_register_interrupt(eink_available, NULL, eink_set_window_cb, &win));
 }
 
 void eink_clear() {
@@ -88,7 +89,7 @@ void eink_clear() {
 }
 
 void eink_exec(uint8_t opcode, uint8_t dcount, ...) {
-	digitalWrite(DC_PIN, LOW);  // Command mode
+	digitalWrite(DC_PIN, LOW);// Command mode
 	SPI.transfer(opcode);
 	digitalWrite(DC_PIN, HIGH); // Now data
 	if (dcount == 0) return;
