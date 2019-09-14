@@ -49,7 +49,7 @@ void eink_set_luts(uint8_t quick) {
 	eink_execv(LUT_BLACK_TO_BLACK, 42, quick ? lut_bb_quick : lut_bb);
 }
 
-bool eink_available() {
+uint8_t eink_available() {
 	return digitalRead(BUSY_PIN) == HIGH;
 }
 
@@ -63,6 +63,7 @@ void eink_set_window_cb(struct eink_window *win) {
 	eink_exec(PARTIAL_OUT, 0);
 	if (!--pending_updates)
 		eink_exec(DISPLAY_REFRESH, 0);
+	free(win);
 }
 
 void eink_set_window(uint16_t x, uint16_t y, uint8_t *window, uint16_t cols, uint16_t rows) {
@@ -70,9 +71,12 @@ void eink_set_window(uint16_t x, uint16_t y, uint8_t *window, uint16_t cols, uin
 		Serial.println("/!\\ Wrong window size or position");
 		return;
 	}
-	pending_updates++;
-	struct eink_window win = { x, y, rows, cols, window };
-	Serial.println(ev_register_interrupt(eink_available, NULL, eink_set_window_cb, &win));
+	struct eink_window *win = malloc(sizeof(struct eink_window));
+	*win = { x, y, rows, cols, window };
+	if (ev_register_interrupt(eink_available, NULL, eink_set_window_cb, win, false) < 255)
+		pending_updates++;
+	else
+		free(win);
 }
 
 void eink_clear() {
