@@ -1,19 +1,6 @@
 #include "eink.h"
 #include "event.h"
 
-uint8_t window[] = {
-	0b10101010,
-	255,
-	255,
-	0,
-	0,
-	255,
-	255,
-	0,
-	0,
-	0b01010101,
-};
-
 uint16_t cursor_x = 0, cursor_y = 0;
 
 void put_symbol() {
