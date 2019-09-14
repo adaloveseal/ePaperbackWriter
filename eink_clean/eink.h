@@ -91,7 +91,7 @@ const uint8_t lut_ww_quick[] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-const uint8_t lut_bw[] ={
+const uint8_t lut_bw[] = {
 0x40, 0x17, 0x00, 0x00, 0x00, 0x02,
 0x90, 0x17, 0x17, 0x00, 0x00, 0x02,
 0x40, 0x0A, 0x01, 0x00, 0x00, 0x01,
@@ -168,8 +168,8 @@ struct eink_window {
 void eink_init(uint16_t cols, uint16_t rows);
 void eink_exec(uint8_t opcode, uint8_t dcount, ...);
 void eink_execv(uint8_t opcode, uint8_t dcount, uint8_t *data);
-void eink_set_pixel(uint16_t x, uint16_t y, uint8_t value);
 void eink_set_window(uint16_t x, uint16_t y, uint8_t *window, uint16_t cols, uint16_t rows);
+void eink_putchar(uint16_t x, uint16_t y, uint8_t chr);
 void eink_set_luts(uint8_t quick);
 void eink_clear();
 

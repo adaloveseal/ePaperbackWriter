@@ -20,7 +20,7 @@ void put_symbol() {
 	if (!ev_interrupt_available()) return;
 	char symbol = Serial.read();
 	Serial.print((char)symbol);
-	eink_set_window(cursor_x, cursor_y, window, 8, 10);
+	eink_putchar(cursor_x, cursor_y, symbol);
 	cursor_x += 8;
 	if (cursor_x > 392) {
 		cursor_x = 0;

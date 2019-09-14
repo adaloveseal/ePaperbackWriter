@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "eink.h"
 #include "event.h"
+#include "font.h"
 
 struct eink_display display;
 uint8_t pending_updates = 0;
@@ -77,6 +78,12 @@ void eink_set_window(uint16_t x, uint16_t y, uint8_t *window, uint16_t cols, uin
 		pending_updates++;
 	else
 		free(win);
+}
+
+void eink_putchar(uint16_t x, uint16_t y, uint8_t chr) {
+	Serial.print("Sending index ");
+	Serial.println((chr - ' ') * 12);
+	eink_set_window(x, y, font + (chr - ' ') * 12, 8, 12);
 }
 
 void eink_clear() {
