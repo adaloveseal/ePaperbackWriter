@@ -1,28 +1,45 @@
 #include "eink.h"
 #include "event.h"
 
-char window[] = {
-	0b10101010, 0b10101010,
-	255, 255,
-	255, 255,
-	0, 0,
-	0, 0,
-	255, 255,
-	255, 255,
-	0, 0,
-	0, 0,
-	0b01010101, 0b01010101
-  };
+uint8_t window[] = {
+	0b10101010,
+	255,
+	255,
+	0,
+	0,
+	255,
+	255,
+	0,
+	0,
+	0b01010101,
+};
+
+uint16_t cursor_x = 0, cursor_y = 0;
+
+void put_symbol() {
+	if (!ev_interrupt_available()) return;
+	char symbol = Serial.read();
+	Serial.print((char)symbol);
+	eink_putchar(cursor_x, cursor_y, symbol);
+	cursor_x += 8;
+	if (cursor_x > 392) {
+		cursor_x = 0;
+		cursor_y += 12;
+	}
+}
+
+uint8_t serial_available() {
+	return Serial.available();
+}
 
 void setup() {
 	Serial.begin(9600);
 	delay(5000);
 	eink_init(400, 300);
-	eink_set_window(16, 25, window, 16, 10);
-	eink_set_window(64, 20, window, 16, 10);
-	eink_set_window(128, 40, window, 16, 10);
-	eink_sync();
+	ev_register_interrupt(serial_available, NULL, put_symbol, NULL, true);
+	Serial.println("Done");
 }
 
 void loop() {
+	ev_run_interrupts();
 }
