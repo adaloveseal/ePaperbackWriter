@@ -27,7 +27,10 @@ int main(int argc, char **argv) {
 	if (filestat.st_size < sizeof(struct psf2_header)) return 3;
 	void *data = mmap(NULL, filestat.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
 	struct psf2_header *psf = data;
-	if (psf->magic != 0x864ab572) return 4;
+	if (psf->magic != 0x864ab572) {
+		fprintf(stderr, "Wrong magic number: got %x, should be 0x864ab572\n", psf->magic);
+		return 4;
+	}
 	if (filestat.st_size < psf->headersize + psf->length * psf->charsize) return 5;
 	char *bitmap = data + psf->headersize + asc * psf->charsize;
 	int i, j, width = (psf->width + 7) / 8;
