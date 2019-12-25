@@ -1,0 +1,16 @@
+#!/usr/bin/python
+
+from sys import argv
+import numpy
+
+jed  = open("decoder.jed").read()
+cmds = [c for c in jed.replace('\r\n', '').split('*') if c[0] in ('L','G', 'Q')]
+deft = bool(int([c for c in cmds if c[0] == 'G'][0][1]))
+size = int([c for c in cmds if c[:2] == 'QF'][0][2:])
+mtrx = numpy.ones(size, dtype=bool) * deft
+for cmd in [c for c in cmds if c[0] == 'L']:
+	ofst, bstr = cmd[1:].split(' ')
+	mtrx[int(ofst):int(ofst)+len(bstr)] = [bool(int(b)) for b in list(bstr)]
+
+main = mtrx[:5808].reshape((132, 44)).T
+print numpy.linspace(0, 5807, 5808, dtype=int).reshape((132, 44)).T

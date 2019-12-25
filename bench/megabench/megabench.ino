@@ -61,42 +61,50 @@ void setup() {
 	PORTC = 0b00001111;
 	delayMicroseconds(10);
 	// Erase ROM
+	/*
 	writeByte(0x5555, 0xAA);
 	writeByte(0x2AAA, 0x55);
 	writeByte(0x5555, 0x80);
 	writeByte(0x5555, 0xAA);
 	writeByte(0x2AAA, 0x55);
 	writeByte(0x5555, 0x10);
+	delay(100);
 	// Byte program
-	writeByte(0x5555, 0xAA);
-	writeByte(0x2AAA, 0x55);
-	writeByte(0x5555, 0xA0);
-	writeByte(0x0000, 0x42);
-
-	writeByte(0x5555, 0xAA);
-	writeByte(0x2AAA, 0x55);
-	writeByte(0x5555, 0xA0);
-	writeByte(0xFFFF, 0xEE);
+	Serial.println("Starting programming");
+	for (uint16_t i = 0xC000; i > 0; i++)
+		programByte(i, 0xEA);
+	Serial.println("Done.");
+	*/
 	DDRL  = 0x00;
 	PORTC = 0b00000111;
 }
 
+void programByte(uint16_t addr, uint8_t data) {
+	writeByte(0x5555, 0xAA);
+	writeByte(0x2AAA, 0x55);
+	writeByte(0x5555, 0xA0);
+	writeByte(addr, data);
+}
+
 void writeByte(uint16_t addr, uint8_t data) {
+	/*
 	char buffer[100];
 	sprintf(buffer, "$%04X -- $%02X\n", addr, data);
 	Serial.write(buffer);
+	*/
 	PORTK = addr >> 8;
 	PORTF = addr & 0xFF;
 	PORTL = data;
 	DDRL  = 0xFF;
 	PORTC = 0b00001101;
-	delay(DELAY);
+	delayMicroseconds(50);
 	DDRL  = 0x00;
 	PORTC = 0b00001111;
-	delay(DELAY);
+	delayMicroseconds(50);
 }
 
 void loop() {
+	return;
 	char buffer[10];
 	Serial.print("Reading address $0000: ");
 	DDRL  = 0x00;
