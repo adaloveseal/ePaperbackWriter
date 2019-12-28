@@ -3,7 +3,7 @@
 from sys import argv
 import numpy
 
-jed  = open("decoder.jed").read()
+jed  = open(argv[1]).read()
 cmds = [c for c in jed.replace('\r\n', '').split('*') if c[0] in ('L','G', 'Q')]
 deft = bool(int([c for c in cmds if c[0] == 'G'][0][1]))
 size = int([c for c in cmds if c[:2] == 'QF'][0][2:])
@@ -13,4 +13,11 @@ for cmd in [c for c in cmds if c[0] == 'L']:
 	mtrx[int(ofst):int(ofst)+len(bstr)] = [bool(int(b)) for b in list(bstr)]
 
 main = mtrx[:5808].reshape((132, 44)).T
-print numpy.linspace(0, 5807, 5808, dtype=int).reshape((132, 44)).T
+olmc = numpy.fliplr(mtrx[5808:5828].reshape(10, 2)).reshape((20,))
+
+join = lambda a: reduce(lambda s, t: s + ', ' + t, a)
+
+head = open(argv[1] + ".hpp", "w")
+head.write("const bool atf_main[] = { " + join(['true' if b else 'false' for b in main.reshape((5808,))]) + " };\n")
+head.write("const bool atf_olmc[] = { " + join(['true' if b else 'false' for b in olmc]) + " };\n")
+head.close()
