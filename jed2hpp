@@ -15,9 +15,9 @@ for cmd in [c for c in cmds if c[0] == 'L']:
 main = mtrx[:5808].reshape((132, 44)).T
 olmc = numpy.fliplr(mtrx[5808:5828].reshape(10, 2)).reshape((20,))
 
-join = lambda a: reduce(lambda s, t: s + ', ' + t, a)
-
 head = open(argv[1] + ".hpp", "w")
-head.write("const bool atf_main[] = { " + join(['true' if b else 'false' for b in main.reshape((5808,))]) + " };\n")
-head.write("const bool atf_olmc[] = { " + join(['true' if b else 'false' for b in olmc]) + " };\n")
+head.write("const uint8_t atf_main[44][132] = { " + ",\n".join(
+	["{ " + ", ".join(['1' if b else '0' for b in r]) + " }" for r in main]
+) + " };\n")
+head.write("const uint8_t atf_olmc[20] = { " + ", ".join(['1' if b else '0' for b in olmc]) + " };\n")
 head.close()
