@@ -1,0 +1,49 @@
+Name     decoder ;
+PartNo   6539 ;
+Date     01/03/2020 ;
+Revision 02 ;
+Designer Ada Loveseal ;
+Company  Bishop Computing Machines ;
+Assembly None ;
+Location None ;
+Device   g22v10 ;
+
+/* *************** INPUT PINS *********************/
+
+PIN 1  = PHI1;
+PIN [2..9] = [D0..7];
+PIN 10 = A15;
+PIN 11 = A14;
+PIN 13 = PRG;
+PIN 14 = RW;
+
+/* *************** OUTPUT PINS *********************/
+
+PIN 23 = !ROM;
+PIN 22 = !CS2;
+PIN 21 = !RAM;
+PIN 20 = isB0;
+PIN 19 = PHI2;
+PIN 18 = BE;
+PIN 17 = !OE;
+PIN 16 = PHI1O;
+PIN 15 = isBFF;
+
+PHI2 = !PHI1;
+PHI1O= PHI1;
+
+isB0.d  = [D0..7]:0;
+isB0.ar = 'b'0;
+isB0.sp = 'b'0;
+
+isBFF.d = [D0..7]:&;
+isBFF.ar= 'b'0;
+isBFF.sp= 'b'0;
+
+RAM  = !PRG & PHI2 & (!A15 # !isB0);
+CS2  = !PRG & PHI2 & A15 & !A14 & isB0;
+ROM  = PRG # (PHI2 & A15 & A14 & isB0);
+
+BE   = !PRG;
+OE   = !PRG & RW;
+
