@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          g22v10  Library DLIB-h-40-1
-Created         Sat Dec 28 15:22:27 2019
+Created         Fri Jan 03 07:48:24 2020
 Name            decoder 
 Partno          6539 
 Revision        01 
@@ -38,7 +38,7 @@ CS2 =>
     !A14 & A15 & PHI2 & !PRG & isB0
 
 OE =>
-    !PRG & !RW
+    !PRG & RW
 
 PHI1 =>
     !PHI2
@@ -103,7 +103,7 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     B0D                         0        I        1       -       -     
     B0Q                         0        I        2       -       -     
     B0QB                        19       V        3       16      0     
-    BE                          16       V        1       12      0     
+    BE                          17       V        1       14      0     
  !  CS2                         22       V        1       10      0     
     D0                          2        V        -       -       -     
     D1                          3        V        -       -       -     
@@ -113,7 +113,7 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     D5                          7        V        -       -       -     
     D6                          8        V        -       -       -     
     D7                          9        V        -       -       -     
- !  OE                          15       V        1       10      0     
+ !  OE                          16       V        1       12      0     
     PHI1                        18       V        1       16      0     
     PHI2                        1        V        -       -       -     
     PRG                         13       V        -       -       -     
@@ -122,9 +122,9 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     RW                          14       V        -       -       -     
     isB0                        20       V        9       14      0     
     B0QB                oe      19       D        1       1       0     
-    BE                  oe      16       D        1       1       0     
+    BE                  oe      17       D        1       1       0     
     CS2                 oe      22       D        1       1       0     
-    OE                  oe      15       D        1       1       0     
+    OE                  oe      16       D        1       1       0     
     PHI1                oe      18       D        1       1       0     
     RAM                 oe      21       D        1       1       0     
     ROM                 oe      23       D        1       1       0     
@@ -236,9 +236,9 @@ Pin #18  05818 Mode  --
  03520 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  03564 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  03608 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
-Pin #17  05820 Mode  xx 
- 03652 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
- 03696 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
+Pin #17  05820 Mode  -- 
+ 03652 -------------------------------------------- 
+ 03696 -------------------------------------------x 
  03740 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  03784 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  03828 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
@@ -252,9 +252,9 @@ Pin #17  05820 Mode  xx
  04180 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  04224 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  04268 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
-Pin #16  05822 Mode  -- 
+Pin #16  05822 Mode  x- 
  04312 -------------------------------------------- 
- 04356 -------------------------------------------x 
+ 04356 --------------------------------------x----x 
  04400 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  04444 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  04488 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
@@ -266,9 +266,9 @@ Pin #16  05822 Mode  --
  04752 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  04796 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  04840 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
-Pin #15  05824 Mode  x- 
- 04884 -------------------------------------------- 
- 04928 ---------------------------------------x---x 
+Pin #15  05824 Mode  xx 
+ 04884 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
+ 04928 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  04972 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  05016 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  05060 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
@@ -306,9 +306,9 @@ LEGEND    X : fuse not blown
                        D3 x---|5           20|---x isB0                     
                        D4 x---|6           19|---x B0QB                     
                        D5 x---|7           18|---x PHI1                     
-                       D6 x---|8           17|---x                          
-                       D7 x---|9           16|---x BE                       
-                      A15 x---|10          15|---x !OE                      
+                       D6 x---|8           17|---x BE                       
+                       D7 x---|9           16|---x !OE                      
+                      A15 x---|10          15|---x                          
                       A14 x---|11          14|---x RW                       
                       GND x---|12          13|---x PRG                      
                               |______________|

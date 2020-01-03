@@ -23,8 +23,8 @@ PIN 21 = !RAM;
 PIN 20 = isB0;
 PIN 19 = B0QB;
 PIN 18 = PHI1;
-PIN 16 = BE;
-PIN 15 = !OE;
+PIN 17 = BE;
+PIN 16 = !OE;
 
 PHI1 = !PHI2;
 
@@ -38,4 +38,4 @@ CS2  = !PRG & PHI2 & A15 & !A14 & isB0;
 ROM  = PRG # (PHI2 & A15 & A14 & isB0);
 
 BE   = !PRG;
-OE   = !PRG & !RW;
+OE   = !PRG & RW;
