@@ -5,7 +5,7 @@
 
 CUPL(WM)        5.0a Serial# 60008009
 Device          g22v10  Library DLIB-h-40-1
-Created         Fri Jan 03 18:33:56 2020
+Created         Fri Jan 03 20:44:44 2020
 Name            decoder 
 Partno          6539 
 Revision        02 
@@ -51,14 +51,8 @@ isB0.ar  =>
 isB0.sp  =>
     0 
 
-isBFF.d  =>
-    D0 & D1 & D2 & D3 & D4 & D5 & D6 & D7
-
-isBFF.ar  =>
-    0 
-
-isBFF.sp  =>
-    0 
+isB0B =>
+    !isB0
 
 BE.oe  =>
     1 
@@ -87,7 +81,7 @@ RW.oe  =>
 isB0.oe  =>
     1 
 
-isBFF.oe  =>
+isB0B.oe  =>
     1 
 
 
@@ -101,7 +95,7 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
 
     A14                         11       V        -       -       -     
     A15                         10       V        -       -       -     
-    BE                          18       V        1       16      0     
+    BE                          16       V        1       12      0     
  !  CS2                         22       V        1       10      0     
     D0                          2        V        -       -       -     
     D1                          3        V        -       -       -     
@@ -111,10 +105,10 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     D5                          7        V        -       -       -     
     D6                          8        V        -       -       -     
     D7                          9        V        -       -       -     
- !  OE                          17       V        1       14      0     
+ !  OE                          15       V        1       10      0     
     PHI1                        1        V        -       -       -     
-    PHI1O                       16       V        1       12      0     
-    PHI2                        19       V        1       16      0     
+    PHI1O                       18       V        1       16      0     
+    PHI2                        17       V        1       14      0     
     PRG                         13       V        -       -       -     
  !  RAM                         21       V        2       12      0     
  !  ROM                         23       V        2       8       0     
@@ -123,20 +117,17 @@ Pol   Name              Ext     Pin     Type     Used   Pterms  Level
     isB0                d       20       X        1       14      0     
     isB0                ar      20       X        1       1       1     
     isB0                sp      20       X        1       1       1     
-    isBFF                       15       V        -       -       -     
-    isBFF               d       15       X        1       10      0     
-    isBFF               ar      15       X        1       1       1     
-    isBFF               sp      15       X        1       1       1     
-    BE                  oe      18       D        1       1       0     
+    isB0B                       19       V        1       16      0     
+    BE                  oe      16       D        1       1       0     
     CS2                 oe      22       D        1       1       0     
-    OE                  oe      17       D        1       1       0     
-    PHI1O               oe      16       D        1       1       0     
-    PHI2                oe      19       D        1       1       0     
+    OE                  oe      15       D        1       1       0     
+    PHI1O               oe      18       D        1       1       0     
+    PHI2                oe      17       D        1       1       0     
     RAM                 oe      21       D        1       1       0     
     ROM                 oe      23       D        1       1       0     
     RW                  oe      14       D        1       1       0     
     isB0                oe      20       D        1       1       0     
-    isBFF               oe      15       D        1       1       0     
+    isB0B               oe      19       D        1       1       0     
 
 
 LEGEND    D : default variable         F : field      G : group
@@ -158,7 +149,7 @@ AR
 Pin #23  05808 Mode  x- 
  00044 -------------------------------------------- 
  00088 ------------------------------------------x- 
- 00132 ---------------x--x-----------------x---x--- 
+ 00132 ---------------x----------x---------x---x--- 
  00176 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  00220 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  00264 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
@@ -167,7 +158,7 @@ Pin #23  05808 Mode  x-
  00396 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
 Pin #22  05810 Mode  x- 
  00440 -------------------------------------------- 
- 00484 ---------------x--x-----------------x----x-x 
+ 00484 ---------------x----------x---------x----x-x 
  00528 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  00572 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  00616 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
@@ -179,8 +170,8 @@ Pin #22  05810 Mode  x-
  00880 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
 Pin #21  05812 Mode  x- 
  00924 -------------------------------------------- 
- 00968 --------------x---x------------------------x 
- 01012 ------------------x------------------x-----x 
+ 00968 --------------x-----------x----------------x 
+ 01012 --------------------------x----------x-----x 
  01056 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  01100 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  01144 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
@@ -209,7 +200,7 @@ Pin #20  05814 Mode  -x
  02112 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
 Pin #19  05816 Mode  -- 
  02156 -------------------------------------------- 
- 02200 -x------------------------------------------ 
+ 02200 --------------x----------------------------- 
  02244 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  02288 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  02332 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
@@ -227,7 +218,7 @@ Pin #19  05816 Mode  --
  02860 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
 Pin #18  05818 Mode  -- 
  02904 -------------------------------------------- 
- 02948 -------------------------------------------x 
+ 02948 x------------------------------------------- 
  02992 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  03036 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  03080 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
@@ -243,9 +234,9 @@ Pin #18  05818 Mode  --
  03520 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  03564 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  03608 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
-Pin #17  05820 Mode  x- 
+Pin #17  05820 Mode  -- 
  03652 -------------------------------------------- 
- 03696 --------------------------------------x----x 
+ 03696 -x------------------------------------------ 
  03740 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  03784 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  03828 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
@@ -261,7 +252,7 @@ Pin #17  05820 Mode  x-
  04268 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
 Pin #16  05822 Mode  -- 
  04312 -------------------------------------------- 
- 04356 x------------------------------------------- 
+ 04356 -------------------------------------------x 
  04400 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  04444 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  04488 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
@@ -273,9 +264,9 @@ Pin #16  05822 Mode  --
  04752 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  04796 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  04840 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
-Pin #15  05824 Mode  -x 
+Pin #15  05824 Mode  x- 
  04884 -------------------------------------------- 
- 04928 ----x---x---x---x---x---x---x---x----------- 
+ 04928 --------------------------------------x----x 
  04972 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  05016 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
  05060 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 
@@ -311,11 +302,11 @@ LEGEND    X : fuse not blown
                        D1 x---|3           22|---x !CS2                     
                        D2 x---|4           21|---x !RAM                     
                        D3 x---|5           20|---x isB0                     
-                       D4 x---|6           19|---x PHI2                     
-                       D5 x---|7           18|---x BE                       
-                       D6 x---|8           17|---x !OE                      
-                       D7 x---|9           16|---x PHI1O                    
-                      A15 x---|10          15|---x isBFF                    
+                       D4 x---|6           19|---x isB0B                    
+                       D5 x---|7           18|---x PHI1O                    
+                       D6 x---|8           17|---x PHI2                     
+                       D7 x---|9           16|---x BE                       
+                      A15 x---|10          15|---x !OE                      
                       A14 x---|11          14|---x RW                       
                       GND x---|12          13|---x PRG                      
                               |______________|
