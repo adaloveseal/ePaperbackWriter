@@ -1,0 +1,28 @@
+Name     decoder ;
+PartNo   6539 ;
+Date     08/05/2021 ;
+Revision 03 ;
+Designer Ada Loveseal ;
+Company  Bishop Computing Machines ;
+Assembly None ;
+Location None ;
+Device   g22v10 ;
+
+/* *************** INPUT PINS *********************/
+
+PIN [1..17] = [A20..4];
+PIN 18 = PHI2;
+
+/* *************** OUTPUT PINS *********************/
+
+PIN 19 = RAMB;
+PIN 20 = ROMB;
+PIN 21 = IOB;
+
+B00B = [A19..16]:0;
+LPB  = [A14..4]:0;
+
+RAMB = ((B00B # A15) & !B00B) # A20 # PHI2;
+IOB  = B00B # LPB # A20 # PHI2;
+ROMB = ((B00B # A15 # !LPB) & !A20) # PHI2;
+
